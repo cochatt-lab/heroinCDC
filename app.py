@@ -1,0 +1,28 @@
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Title
+st.title("📊 Heroin Overdose Rates by Age Group (2010–2022)")
+
+# Load data
+df = pd.read_csv("KAPLAN Heroin Overdoses - Heroin.csv")
+
+# Display table
+st.subheader("📋 Overdose Rates Table")
+st.dataframe(df.style.format(precision=1))
+
+# Plotting
+st.subheader("📈 Overdose Trends Over Time")
+
+fig, ax = plt.subplots(figsize=(10, 6))
+for column in df.columns[1:]:
+    ax.plot(df["Years"], df[column], marker='o', label=column)
+
+ax.set_xlabel("Year")
+ax.set_ylabel("Overdose Rate per 100,000")
+ax.set_title("Heroin Overdose Rates by Age Group")
+ax.legend(title="Age Group")
+ax.grid(True)
+
+st.pyplot(fig)
